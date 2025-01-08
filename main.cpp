@@ -1,8 +1,18 @@
 #include <asio.hpp>
+#include <fstream>
 #include <iostream>
 #include <string>
 
-int main(int argc, char *argv[]) {
+const std::string content = R"html(
+
+<!DOCTYPE html>
+<html>
+  <body>Hello, world!</body>
+</html>
+
+)html";
+
+int main() {
   try {
     using asio::ip::tcp;
 
@@ -12,8 +22,6 @@ int main(int argc, char *argv[]) {
     for (;;) {
       tcp::socket socket(io_context);
       acceptor.accept(socket);
-
-      const std::string content = "Hello World!";
 
       std::string http_message =
           "HTTP/1.1 200 OK\n"
